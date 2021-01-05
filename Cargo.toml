@@ -1,0 +1,21 @@
+[package]
+name = "lightmap"
+version = "0.1.0"
+authors = ["Arnau Siches <asiches@gmail.com>"]
+edition = "2018"
+description = "A tool to map a SQLite database in the DOT language"
+
+[lib]
+path = "src/lib.rs"
+name = "lightmap"
+
+[[bin]]
+path = "src/main.rs"
+name = "lightmap"
+
+[dependencies]
+anyhow = "1.0.37"
+clap = "3.0.0-beta.2"
+maud = "0.22"
+rusqlite = { version = "0.24", features = ["bundled"] }
+thiserror = "1.0"
