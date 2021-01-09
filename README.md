@@ -1,7 +1,6 @@
 # Lightmap
 
-`lightmap` is a tool to map a SQLite database using the [DOT language]
-likely only useful to me.
+`lightmap` is a tool to map a SQLite database using the [DOT language].
 
 It aims to behave like [sqleton] but as a single binary.
 
