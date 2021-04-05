@@ -1,5 +1,5 @@
 use anyhow::Result;
-use rusqlite::{Connection, Row, ToSql, NO_PARAMS};
+use rusqlite::{params, Connection, Params, Row, ToSql};
 use std::path::{Path, PathBuf};
 
 pub(crate) mod dot;
@@ -46,6 +46,7 @@ impl Package {
     where
         P: IntoIterator,
         P::Item: ToSql,
+        P: Params,
         F: FnMut(&Row<'_>) -> std::result::Result<T, rusqlite::Error>,
     {
         let mut stmt = self.conn.prepare(query)?;
@@ -72,7 +73,7 @@ impl Package {
 
         let mut res = Vec::new();
         let names: Vec<(String, String)> =
-            self.query(querystring, NO_PARAMS, |row| Ok((row.get(0)?, row.get(1)?)))?;
+            self.query(querystring, params![], |row| Ok((row.get(0)?, row.get(1)?)))?;
 
         for (name, path) in names {
             let tables = self.tables(&name)?;
@@ -102,7 +103,7 @@ impl Package {
         );
 
         let mut res = Vec::new();
-        let names: Vec<String> = self.query(&querystring, NO_PARAMS, |row| Ok(row.get(0)?))?;
+        let names: Vec<String> = self.query(&querystring, params![], |row| Ok(row.get(0)?))?;
 
         for name in names {
             let columns = self.columns(&name)?;
@@ -166,7 +167,7 @@ impl Package {
             db_name
         );
 
-        let res = self.query(&querystring, NO_PARAMS, |row| {
+        let res = self.query(&querystring, params![], |row| {
             Ok(Reference::new(row.get(0)?, row.get(1)?))
         })?;
 
