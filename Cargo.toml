@@ -1,6 +1,6 @@
 [package]
 name = "lightmap"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Arnau Siches <asiches@gmail.com>"]
 edition = "2018"
 description = "A tool to map a SQLite database in the DOT language"
